@@ -1,0 +1,31 @@
+{
+  "name": "stylish-ui",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite examples",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@highlightjs/vue-plugin": "^2.1.0",
+    "@stylish-ui/components": "workspace:*",
+    "@stylish-ui/examples": "workspace:*",
+    "@stylish-ui/theme-chalk": "workspace:*",
+    "@stylish-ui/utils": "workspace:*",
+    "highlight.js": "^11.11.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.1",
+    "less": "^4.4.0",
+    "less-loader": "^12.3.0",
+    "vite": "^7.0.6",
+    "vitepress": "^1.6.3"
+  }
+}
