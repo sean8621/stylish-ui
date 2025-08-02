@@ -13,16 +13,16 @@ importers:
         version: 2.1.0(highlight.js@11.11.1)(vue@3.5.18)
       '@stylish-ui/components':
         specifier: workspace:*
-        version: link:packages/components
+        version: link:stylish-ui/components
       '@stylish-ui/examples':
         specifier: workspace:*
         version: link:examples
       '@stylish-ui/theme-chalk':
         specifier: workspace:*
-        version: link:packages/theme-chalk
+        version: link:stylish-ui/theme-chalk
       '@stylish-ui/utils':
         specifier: workspace:*
-        version: link:packages/utils
+        version: link:stylish-ui/utils
       highlight.js:
         specifier: ^11.11.1
         version: 11.11.1
@@ -45,11 +45,11 @@ importers:
 
   examples: {}
 
-  packages/components: {}
+  stylish-ui/components: {}
 
-  packages/theme-chalk: {}
+  stylish-ui/theme-chalk: {}
 
-  packages/utils: {}
+  stylish-ui/utils: {}
 
 packages:
 
