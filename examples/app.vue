@@ -1,7 +1,6 @@
 <template>
   <div>
-    <p>1111</p>
-    <s-button>按钮</s-button>
+    <s-button type="primary">primary</s-button>
   </div>
 </template>
 
