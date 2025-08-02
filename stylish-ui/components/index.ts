@@ -1,9 +1,14 @@
-import * as components from './components'
+import * as components from "./components";
+import "@stylish-ui/theme-chalk/index.less";
 
-export default{
-    install(app) {
-        Object.entries(components).forEach(([key, value]) => {
-            app.component(key, value);
-        });
-    }
-}
+const FUNCTION_COMP = ["SMessage"];
+
+export default {
+  install(app: any) {
+    Object.entries(components).forEach(([key, value]) => {
+      if (!FUNCTION_COMP.includes(key)) app.component(key, value);
+    });
+  },
+};
+
+export const SMessage = components.SMessage;
