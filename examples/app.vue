@@ -87,6 +87,37 @@
     <s-button type="success" @click="handleMessage('success', true, 5000)"
       >5s</s-button
     >
+    <h2>树形控件</h2>
+    <h3>Tree</h3>
+    <h3>基础树</h3>
+    <s-tree :data="JSON.parse(JSON.stringify(treeData))" />
+    <h3>可选择树</h3>
+    <s-tree :data="JSON.parse(JSON.stringify(treeData))" showCheckbox />
+    <h3>获取选中节点/设置选中节点</h3>
+    <s-button type="primary" @click="getCheckedNodes">获取选中节点</s-button>
+    <s-button type="primary" @click="setCheckedNodes">设置选中的key</s-button>
+    <s-tree
+      ref="treeRef"
+      :data="JSON.parse(JSON.stringify(treeData))"
+      node-key="id"
+      showCheckbox
+    />
+    <h3>默认展开</h3>
+    <s-tree
+      :data="JSON.parse(JSON.stringify(treeData))"
+      node-key="id"
+      :default-expand-all="true"
+    />
+    <h2>步骤条</h2>
+    <h3>基础使用</h3>
+    <s-button @click="handleNextStep">下一步</s-button>
+    当前节点{{ active }}
+    <s-steps :active="active">
+      <s-step title="第一步" description="打开微信扫一扫" />
+      <s-step title="第二步" description="添加好友" />
+      <s-step title="第三步" description="选择我的头像" />
+      <s-step title="第四步" description="转款1000万" />
+    </s-steps>
   </div>
 </template>
 
@@ -104,6 +135,100 @@ const handleMessage = (type, showClose, time) => {
     duration: time,
   });
 };
+
+const treeData = [
+  {
+    id: "1",
+    label: "Level one 1",
+    children: [
+      {
+        id: "1-1",
+        label: "Level two 1-1",
+        children: [
+          {
+            id: "1-1-1",
+            label: "Level three 1-1-1",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: "2",
+    label: "Level one 2",
+    children: [
+      {
+        id: "2-1",
+        label: "Level two 2-1",
+        children: [
+          {
+            id: "2-1-1",
+            label: "Level three 2-1-1",
+          },
+        ],
+      },
+      {
+        id: "2-2",
+        label: "Level two 2-2",
+        children: [
+          {
+            id: "2-2-1",
+            label: "Level three 2-2-1",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: "3",
+    label: "Level one 3",
+    children: [
+      {
+        id: "3-1",
+        label: "Level two 3-1",
+        children: [
+          {
+            id: "3-1-1",
+            label: "Level three 3-1-1",
+          },
+        ],
+      },
+      {
+        id: "3-2",
+        label: "Level two 3-2",
+        children: [
+          {
+            id: "3-2-1",
+            label: "Level three 3-2-1",
+          },
+        ],
+      },
+      {
+        id: "3-3",
+        label: "Level two 3-3",
+      },
+    ],
+  },
+];
+
+const treeRef = ref(null);
+const getCheckedNodes = () => {
+  const keys = treeRef.value?.getCheckedNodes();
+  console.log("keys: ", keys);
+};
+
+const setCheckedNodes = () => {
+  treeRef.value?.setCheckedNodes(["1-1", "3-3"]);
+};
+
+const active=ref(0);
+const handleNextStep = () => {
+  active.value += 1;
+  if (active.value > 4) {
+    active.value = 0;
+  }
+};
+
 </script>
 
 <style scoped></style>

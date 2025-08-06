@@ -8,11 +8,28 @@ import url from "postcss-url";
 
 export default {
   input: "./stylish-ui/components/index.ts",
-  output: {
-    file: "dist/es.js",
-    name: "StylishUI",
-    format: "es",
-  },
+  output: [
+    {
+      file: "dist/es.js",
+      name: "StylishUI",
+      format: "es",
+    },
+    // {
+    //   file: "dist/cjs.js",
+    //   name: "TestUI",
+    //   format: "cjs",
+    //   exports: "named",
+    // },
+    // {
+    //   file: "dist/umd.js",
+    //   name: "TestUI",
+    //   format: "umd",
+    //   exports: "named",
+    //   globals: {
+    //     vue: "Vue",
+    //   },
+    // },
+  ],
   plugins: [
     resolve(),
     vuePlugin(),
@@ -22,7 +39,7 @@ export default {
       plugins: [
         autoprefixer(),
         url({
-          url: "copy",  //inline 内联 会导致图片等资源被转为base64，造成 css 文件过大，浏览器加载时间过长
+          url: "copy", //inline 内联 会导致图片等资源被转为base64，造成 css 文件过大，浏览器加载时间过长
           basePath: "fonts",
           assetsPath: "fonts",
         }),

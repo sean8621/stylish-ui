@@ -1,5 +1,4 @@
 import * as components from "./components";
-import "@stylish-ui/theme-chalk/index.less";
 
 const FUNCTION_COMP = ["SMessage"];
 
