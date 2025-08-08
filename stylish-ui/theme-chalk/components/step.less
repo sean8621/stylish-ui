@@ -26,6 +26,18 @@
       background-color: #888;
     }
   }
+  .s-step__content {
+    margin: 6px 0;
+    width: 100%;
+    color: #333;
+    .s-step__title {
+      font-size: 16px;
+    }
+    .s-step__description {
+      margin-top: 6px;
+      font-size: 12px;
+    }
+  }
   &.is_complete {
     .s-step__icon {
       background-color: var(--s-primary);
@@ -50,7 +62,7 @@
   }
   &.s-step__center {
     .s-step__head {
-      transform: translateX(calc(50%-13px));
+      transform: translateX(calc(50% - 13px));
     }
     .s-step__content {
       text-align: center;
@@ -63,19 +75,7 @@
     .s-step__head {
       display: flex;
       justify-content: center;
-      transform: translate(0);
-    }
-  }
-  .s-step__content {
-    margin: 6px 0;
-    width: 100%;
-    color: #333;
-    .s-step__title {
-      font-size: 16px;
-    }
-    .s-step__description {
-      margin-top: 6px;
-      font-size: 12px;
+      transform: translateX(0);
     }
   }
 }

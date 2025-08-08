@@ -110,13 +110,48 @@
     />
     <h2>步骤条</h2>
     <h3>基础使用</h3>
-    <s-button @click="handleNextStep">下一步</s-button>
+    <s-button type="primary" @click="handleNextStep" style="margin-bottom: 10px"
+      >下一步</s-button
+    >
     当前节点{{ active }}
     <s-steps :active="active">
       <s-step title="第一步" description="打开微信扫一扫" />
       <s-step title="第二步" description="添加好友" />
       <s-step title="第三步" description="选择我的头像" />
       <s-step title="第四步" description="转款1000万" />
+    </s-steps>
+    <h3>居中</h3>
+    当前节点{{ active }}
+    <s-steps :active="active" :align="'center'">
+      <s-step title="第一步" description="打开微信扫一扫" />
+      <s-step title="第二步" description="添加好友" />
+      <s-step title="第三步" description="选择我的头像" />
+      <s-step title="第四步" description="转款1000万" />
+    </s-steps>
+    <h3>图标</h3>
+    <s-steps :active="active">
+      <s-step title="起床" icon="notification" />
+      <s-step title="炒股" icon="data-view" />
+      <s-step title="加仓" icon="good" />
+      <s-step title="亏大了" icon="cry" />
+    </s-steps>
+    <h3>自定义图标</h3>
+    <!-- ssss -->
+    <s-steps :active="active" :align="'center'">
+      <s-step title="起床">
+        <template #icon> &#127774; </template>
+      </s-step>
+      <s-step title="又亏了">
+        <template #icon> &#128201;</template>
+      </s-step>
+      <!-- 添加图标 -->
+      <s-step title="继续加仓">
+        <!-- 添加图标 -->
+        <template #icon> + </template>
+      </s-step>
+      <s-step title="亏成狗">
+        <template #icon> &#128021; </template>
+      </s-step>
     </s-steps>
   </div>
 </template>
@@ -221,14 +256,13 @@ const setCheckedNodes = () => {
   treeRef.value?.setCheckedNodes(["1-1", "3-3"]);
 };
 
-const active=ref(0);
+const active = ref(0);
 const handleNextStep = () => {
   active.value += 1;
   if (active.value > 4) {
     active.value = 0;
   }
 };
-
 </script>
 
 <style scoped></style>

@@ -1,4 +1,5 @@
 <template>
+  <!-- 步骤条 -->
   <div class="s-steps">
     <slot></slot>
   </div>
@@ -6,27 +7,19 @@
 
 <script setup>
 import { StepsProps } from "./steps";
-import { onMounted, provide, ref, getCurrentInstance, computed } from "vue";
+import { provide, ref, computed } from "vue";
 
 const props = defineProps(StepsProps);
 
 defineOptions({ name: "s-steps" });
 
 const stepsUids = ref([]);
-onMounted(() => {
-  getStepUids();
-});
+const stepIndexCounter = ref(0);
 
-const getStepUids = () => {
-  const instance = getCurrentInstance();
-  const defaultSlots = instance.subTree.children.find(
-    (t) => t.key === "_default"
-  );
-  if (defaultSlots) {
-    stepsUids.value = defaultSlots.children
-      .filter((vnode) => vnode.type.name === "s-step")
-      .map((v) => v.component.uid);
-  }
+// 获取下一个步骤的索引
+const getNextStepIndex = () => {
+  stepsUids.value.push(stepIndexCounter.value)
+  return stepIndexCounter.value++;
 };
 
 const active = computed(() => props.active);
@@ -34,5 +27,5 @@ const active = computed(() => props.active);
 provide("active", active);
 provide("align", props.align);
 provide("stepsUids", stepsUids);
-provide("getStepUids", getStepUids);
+provide("getNextStepIndex", getNextStepIndex);
 </script>

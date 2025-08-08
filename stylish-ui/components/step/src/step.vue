@@ -9,8 +9,19 @@
     }"
   >
     <div class="s-step__head">
-      <span class="s-step__icon s-icon"> {{ currentIndex + 1 }} </span>
-      <div class="s-step__line"></div>
+      <span
+        class="s-step__icon s-icon"
+        :class="`${icon ? 'icon-' + icon : ''}`"
+      >
+        <template v-if="!$slots.icon">{{
+          icon ? "" : currentIndex + 1
+        }}</template>
+        <slot name="icon" v-else></slot>
+      </span>
+      <div
+        class="s-step__line"
+        v-if="currentIndex !== stepsUids.length - 1"
+      ></div>
     </div>
     <div class="s-step__content">
       <div class="s-step__title">{{ title }}</div>
@@ -20,18 +31,25 @@
 </template>
 
 <script setup>
-import { StepsProps } from "./step";
-import { getCurrentInstance, computed, inject, ref } from "vue";
+import { StepProps } from "./step";
+import {
+  inject,
+  ref,
+  onMounted
+} from "vue";
 
-const props = defineProps(StepsProps);
+const props = defineProps(StepProps);
 defineOptions({ name: "s-step" });
 
-const instance = getCurrentInstance();
 const stepsUids = inject("stepsUids");
 const active = inject("active");
 const align = inject("align");
-
-const currentIndex = computed(() => {
-  return stepsUids.value.findIndex((uid) => uid === instance.uid);
+const getNextStepIndex = inject("getNextStepIndex");
+// 获取当前步骤的索引
+const currentIndex = ref(-1);
+onMounted(() => {
+  if (getNextStepIndex) {
+    currentIndex.value = getNextStepIndex();
+  }
 });
 </script>

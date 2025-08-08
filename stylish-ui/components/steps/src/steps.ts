@@ -12,4 +12,5 @@ export const StepsProps = {
       return STEPS_ALIGN.includes(value);
     },
   },
+
 };
