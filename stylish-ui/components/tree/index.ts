@@ -1,8 +1,6 @@
 import Tree from "./src/tree.vue";
+import { withInstall } from "@stylish-ui/utils";
 
-Tree.install = (app: any) => {
-  app.component(Tree.name, Tree);
-};
-export const STree = Tree;
+export const STree = withInstall(Tree);
 
 export default STree;

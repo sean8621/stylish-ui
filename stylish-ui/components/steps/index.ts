@@ -1,8 +1,6 @@
 import Steps from "./src/steps.vue";
+import { withInstall } from "@stylish-ui/utils";
 
-Steps.install = (app: any) => {
-  app.component(Steps.name, Steps);
-};
-export const SSteps = Steps;
+export const SSteps = withInstall(Steps);
 
 export default SSteps;

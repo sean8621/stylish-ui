@@ -153,6 +153,35 @@
         <template #icon> &#128021; </template>
       </s-step>
     </s-steps>
+    <h2>日历</h2>
+    <h3>基础使用</h3>
+    <s-calendar></s-calendar>
+    <h3>自定义内容</h3>
+    <s-calendar>
+      <template #date-cell="{ dateFormated }">
+        <div>
+          <span>{{ dateFormated }}</span>
+        </div>
+      </template>
+    </s-calendar>
+    <h3>待办事项</h3>
+    <s-calendar class="todo-demo">
+      <template #date-cell="{ dateFormated }">
+        <div class="todo-cell">
+          <span>{{ dateFormated }}</span>
+          <ul v-if="todoList[dateFormated]" class="todo_list">
+            <li
+              v-for="item in todoList[dateFormated]"
+              :key="item.title"
+              class="todo_item"
+            >
+              <span>{{ item.time }}</span>
+              <span>{{ item.title }}</span>
+            </li>
+          </ul>
+        </div>
+      </template>
+    </s-calendar>
   </div>
 </template>
 
@@ -263,6 +292,54 @@ const handleNextStep = () => {
     active.value = 0;
   }
 };
+// 待办列表
+const today =
+  new Date().getFullYear() +
+  "-" +
+  (new Date().getMonth() + 1).toString().padStart(2, "0") +
+  "-" +
+  new Date().getDate().toString().padStart(2, "0");
+const todoList = {
+  "2025-08-10": [
+    { title: "待办1", time: "09:00" },
+    { title: "待办2", time: "10:00" },
+  ],
+  "2025-08-12": [
+    { title: "炒股", time: "09:00" },
+    { title: "干饭", time: "10:00" },
+    { title: "夜生活开始", time: "10:00" },
+  ],
+};
 </script>
 
-<style scoped></style>
+<style scoped>
+.todo-cell {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.todo_list {
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+.todo_item {
+  margin: 6px 0;
+  padding: 0 10px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 26px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  list-style: none;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+.todo-demo :deep(.s-calendar-table) tbody .s-calendar-day {
+  height: 120px;
+}
+</style>
