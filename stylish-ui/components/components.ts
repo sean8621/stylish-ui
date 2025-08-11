@@ -4,3 +4,4 @@ export { STree } from "./tree";
 export { SSteps } from "./steps";
 export { SStep } from "./step";
 export { SCalendar } from "./calendar";
+export { SPagination } from "./pagination";

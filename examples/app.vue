@@ -182,6 +182,17 @@
         </div>
       </template>
     </s-calendar>
+    <h3>分页</h3>
+    <s-pagination
+      :total="100"
+      v-model:current-page="currentPage"
+    ></s-pagination>
+    <h3>跳转功能</h3>
+    <s-pagination
+      :total="100"
+      v-model:current-page="currentPage"
+      show-jump
+    ></s-pagination>
   </div>
 </template>
 
@@ -310,6 +321,9 @@ const todoList = {
     { title: "夜生活开始", time: "10:00" },
   ],
 };
+
+// 分页
+const currentPage = ref(1);
 </script>
 
 <style scoped>
