@@ -193,6 +193,56 @@
       v-model:current-page="currentPage"
       show-jump
     ></s-pagination>
+    <h3>表格</h3>
+    <s-table
+      :column-data="columnData"
+      :table-data="tableData"
+      :height="260"
+    ></s-table>
+    <h3>斑马纹</h3>
+    <s-table
+      :column-data="columnData"
+      :table-data="tableData"
+      :stripe="true"
+      :height="260"
+    ></s-table>
+    <h3>边框</h3>
+    <s-table
+      :column-data="columnData"
+      :table-data="tableData"
+      :stripe="true"
+      :border="true"
+      :height="260"
+    ></s-table>
+    <h3>自定义列</h3>
+    <s-table
+      :column-data="columnData"
+      :table-data="tableData"
+      :stripe="true"
+      :border="true"
+      :height="260"
+    >
+      <template #address="{ scoped, $index }"
+        >这是第{{ $index }}行数据，内容是{{ scoped }}</template
+      >
+    </s-table>
+    <h3>固定表头</h3>
+    <s-table :column-data="columnData" :table-data="tableData" :height="260">
+      <template #address="{ scoped, $index }"
+        >这是第{{ $index }}行数据，内容是{{ scoped }}</template
+      >
+    </s-table>
+    <h3>列对齐</h3>
+    <s-table
+      :column-data="columnData"
+      :table-data="tableData"
+      stripe
+      :border="true"
+    >
+      <template #name="{ scoped, $index }">
+        <div style="width: 50px; height: 20px; background-color: pink"></div>
+      </template>
+    </s-table>
   </div>
 </template>
 
@@ -324,6 +374,102 @@ const todoList = {
 
 // 分页
 const currentPage = ref(1);
+
+// 表格
+const columnData = [
+  {
+    key: "date",
+    lable: "Date",
+    width: "120",
+  },
+  {
+    key: "name",
+    lable: "Name",
+    align: "center",
+  },
+  {
+    key: "address",
+    lable: "Address",
+  },
+];
+
+const tableData = [
+  {
+    date: "2016-05-02",
+    name: "王小虎",
+    address: "上海市普陀区金沙江路 1518 弄",
+  },
+  {
+    date: "2016-05-04",
+    name: "王小虎",
+    address: "上海市普陀区金沙江路 1517 弄",
+  },
+  {
+    date: "2016-05-01",
+    name: "王小虎",
+    address: "上海市普陀区金沙江路 1519 弄",
+  },
+  {
+    date: "2016-05-03",
+    name: "王小虎",
+    address: "上海市普陀区金沙江路 1516 弄",
+  },
+  {
+    date: "2016-05-04",
+    name: "王小虎",
+    address: "上海市普陀区金沙江路 1517 弄",
+  },
+  {
+    date: "2016-05-03",
+    name: "王小虎",
+    address: "上海市普陀区金沙江路 1516 弄",
+  },
+  {
+    date: "2016-05-04",
+    name: "王小虎",
+    address: "上海市普陀区金沙江路 1517 弄",
+  },
+  {
+    date: "2016-05-03",
+    name: "王小虎",
+    address: "上海市普陀区金沙江路 1516 弄",
+  },
+  {
+    date: "2016-05-04",
+    name: "王小虎",
+    address: "上海市普陀区金沙江路 1517 弄",
+  },
+  {
+    date: "2016-05-04",
+    name: "王小虎",
+    address: "上海市普陀区金沙江路 1517 弄",
+  },
+  {
+    date: "2016-05-03",
+    name: "王小虎",
+    address: "上海市普陀区金沙江路 1516 弄",
+  },
+  {
+    date: "2016-05-04",
+    name: "王小虎",
+    address: "上海市普陀区金沙江路 1517 弄",
+  },
+  {
+    date: "2016-05-04",
+    name: "王小虎",
+    address: "上海市普陀区金沙江路 1517 弄",
+  },
+  {
+    date: "2016-05-03",
+    name: "王小虎",
+    address: "上海市普陀区金沙江路 1516 弄",
+  },
+  {
+    date: "2016-05-04",
+    name: "王小虎",
+    address: "上海市普陀区金沙江路 1517 弄",
+  },
+];
 </script>
 
 <style scoped>
