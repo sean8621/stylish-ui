@@ -243,6 +243,16 @@
         <div style="width: 50px; height: 20px; background-color: pink"></div>
       </template>
     </s-table>
+    <h3>列固定</h3>
+    <s-table
+      :column-data="columnData"
+      :table-data="tableData"
+      stripe
+      :border="true"
+      :height="260"
+      style="width: 500px"
+    >
+    </s-table>
   </div>
 </template>
 
@@ -379,17 +389,47 @@ const currentPage = ref(1);
 const columnData = [
   {
     key: "date",
-    lable: "Date",
+    label: "Date",
     width: "120",
+    fixed: "left",
   },
   {
     key: "name",
-    lable: "Name",
+    label: "Name",
     align: "center",
   },
   {
     key: "address",
-    lable: "Address",
+    label: "Address",
+  },
+  {
+    key: "address",
+    label: "Address",
+  },
+  {
+    key: "address",
+    label: "Address",
+  },
+  {
+    key: "address",
+    label: "Address",
+  },
+  {
+    key: "address",
+    label: "Address",
+  },
+  {
+    key: "address",
+    label: "Address",
+  },
+  {
+    key: "address",
+    label: "Address",
+  },
+  {
+    key: "address",
+    label: "Address",
+    fixed: "right",
   },
 ];
 

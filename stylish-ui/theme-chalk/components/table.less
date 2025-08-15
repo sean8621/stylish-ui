@@ -8,6 +8,7 @@
     width: 100%;
     border-spacing: 0;
     border-collapse: collapse;
+    table-layout: fixed;
   }
   .s-table__thead tr > th,
   .s-table__tbody tr > td {
@@ -70,4 +71,35 @@
 .s-table__tbody .cell {
   display: flex;
   flex-wrap: wrap;
+}
+
+.t-table__fixed-column {
+  position: sticky;
+  left: 0;
+  background-color: #fff;
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: -1px;
+    width: 10px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    box-shadow: none;
+    touch-action: none;
+    pointer-events: none;
+  }
+  &.t-table__fixed-column.t-table__fixed-column--left {
+    &:before {
+      box-shadow: inset 10px 0 10px -10px rgba(0, 0, 0, 0.15);
+      right: -10px;
+    }
+  }
+  &.t-table__fixed-column.t-table__fixed-column--right {
+    right: 0;
+    &:before {
+      left: -10px;
+      box-shadow: inset -10px 0 10px -10px rgba(0, 0, 0, 0.15);
+    }
+  }
 }
