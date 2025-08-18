@@ -249,8 +249,7 @@
       :table-data="tableData"
       stripe
       :border="true"
-      :height="260"
-      style="width: 500px"
+      :height="360"
     >
     </s-table>
   </div>
@@ -396,39 +395,32 @@ const columnData = [
   {
     key: "name",
     label: "Name",
-    align: "center",
+    width: "220",
+    fixed: "left",
+  },
+  {
+    key: "state",
+    label: "State",
+    width: "220",
+  },
+  {
+    key: "city",
+    label: "City",
+    width: "520",
   },
   {
     key: "address",
     label: "Address",
+    width: "820",
   },
   {
-    key: "address",
-    label: "Address",
+    key: "zip",
+    label: "Zip",
+    fixed: "right",
   },
   {
-    key: "address",
-    label: "Address",
-  },
-  {
-    key: "address",
-    label: "Address",
-  },
-  {
-    key: "address",
-    label: "Address",
-  },
-  {
-    key: "address",
-    label: "Address",
-  },
-  {
-    key: "address",
-    label: "Address",
-  },
-  {
-    key: "address",
-    label: "Address",
+    key: "tag",
+    label: "Tag",
     fixed: "right",
   },
 ];

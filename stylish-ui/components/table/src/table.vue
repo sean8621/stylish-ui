@@ -4,14 +4,19 @@
       's-table',
       border ? 's-table--border' : '',
       verticalOverflow ? 's-table__has_scroll' : '',
+      `t-table__scroll-${scrollStatus}`,
     ]"
     ref="tableRef"
   >
-    <div class="s-table__thead-wrapper" style="overflow: hidden">
+    <div
+      class="s-table__thead-wrapper"
+      style="overflow: hidden"
+      ref="theadWrapperRef"
+    >
       <table class="s-table__thead">
         <colgroup>
           <col
-            v-for="colItem in columnData"
+            v-for="colItem in actualRenderColumns"
             :key="'table_col_' + colItem.key"
             :width="colItem.width || averageWidth"
           />
@@ -20,12 +25,32 @@
         <thead>
           <tr>
             <th
-              v-for="theadItem in columnData"
+              v-for="(theadItem, theadIndex) in actualRenderColumns"
               :key="theadItem.key"
               :class="{
-                't-table__fixed-column': theadItem.fixed,
-                't-table__fixed-column--left': theadItem.fixed === 'left',
-                't-table__fixed-column--right': theadItem.fixed === 'right',
+                's-table__fixed-column': theadItem.fixed,
+                's-table__fixed-column--left': theadItem.fixed === 'left',
+                's-table__fixed-column--right': theadItem.fixed === 'right',
+                's-table__fixed-column--first': queryFixedColumnIndex(
+                  theadItem.fixed,
+                  theadItem.key,
+                  'first'
+                ),
+                's-table__fixed-column--last': queryFixedColumnIndex(
+                  theadItem.fixed,
+                  theadItem.key,
+                  'last'
+                ),
+              }"
+              :style="{
+                left:
+                  theadItem.fixed === 'left'
+                    ? calcPosition(theadItem.fixed, theadIndex) + 'px'
+                    : 'auto',
+                right:
+                  theadItem.fixed === 'right'
+                    ? calcPosition(theadItem.fixed, theadIndex, 'thead') + 'px'
+                    : 'auto',
               }"
             >
               <div
@@ -37,6 +62,13 @@
                 {{ theadItem.label }}
               </div>
             </th>
+            <th
+              v-if="verticalOverflow"
+              :class="{
+                's-table__fixed-column': fixedRightColumns.length,
+              }"
+              style="right: 0"
+            ></th>
           </tr>
         </thead>
       </table>
@@ -52,7 +84,7 @@
       <table class="s-table__tbody">
         <colgroup>
           <col
-            v-for="colItem in columnData"
+            v-for="colItem in actualRenderColumns"
             :key="'table_col_' + colItem.key"
             :width="colItem.width || averageWidth"
           />
@@ -66,12 +98,32 @@
             }"
           >
             <td
-              v-for="(colItem, i) in columnData"
+              v-for="(colItem, i) in actualRenderColumns"
               :key="'table_col_' + i"
               :class="{
-                't-table__fixed-column': colItem.fixed,
-                't-table__fixed-column--left': colItem.fixed === 'left',
-                't-table__fixed-column--right': colItem.fixed === 'right',
+                's-table__fixed-column': colItem.fixed,
+                's-table__fixed-column--left': colItem.fixed === 'left',
+                's-table__fixed-column--right': colItem.fixed === 'right',
+                's-table__fixed-column--first': queryFixedColumnIndex(
+                  colItem.fixed,
+                  colItem.key,
+                  'first'
+                ),
+                's-table__fixed-column--last': queryFixedColumnIndex(
+                  colItem.fixed,
+                  colItem.key,
+                  'last'
+                ),
+              }"
+              :style="{
+                left:
+                  colItem.fixed === 'left'
+                    ? calcPosition(colItem.fixed, i) + 'px'
+                    : 'auto',
+                right:
+                  colItem.fixed === 'right'
+                    ? calcPosition(colItem.fixed, i) + 'px'
+                    : 'auto',
               }"
             >
               <div
@@ -120,11 +172,19 @@ const theadWrapperRef = ref(null);
 const tbodyWrapperRef = ref(null);
 
 const verticalOverflow = ref(false);
-const MIN_COLUMN_WIDTH = 50; //自动分配的最小列宽
+const MIN_COLUMN_WIDTH = 120; //自动分配的最小列宽
 const horizontalOverflow = ref(false);
 
+const scrollStatus = ref("start");
 const listenScroll = (e) => {
-  theadWrapperRef.value.scrollLeft = e.target.scrollLeft;
+  const scrollLeft = e.target.scrollLeft;
+  scrollStatus.value =
+    scrollLeft === 0
+      ? "start"
+      : scrollLeft + e.target.offsetWidth >= e.target.scrollWidth
+      ? "end"
+      : "center";
+  theadWrapperRef.value.scrollLeft = scrollLeft;
 };
 const calcColumnWidth = () => {
   const tableWrapperWidth = tbodyWrapperRef.value.offsetWidth;
@@ -154,9 +214,51 @@ const calcColumnWidth = () => {
   }
 };
 
+const calcPosition = (direction, index, type) => {
+  if (direction === "left") {
+    const columnWidthArr = props.columnData
+      .slice(0, index)
+      .map((item) => (item.width ? Number(item.width) : MIN_COLUMN_WIDTH));
+    return columnWidthArr.reduce((acc, cur) => acc + cur, 0);
+  } else {
+    const columnWidthArr = props.columnData
+      .slice(index + 1)
+      .map((item) => (item.width ? Number(item.width) : MIN_COLUMN_WIDTH));
+    const rightDistance = columnWidthArr.reduce((acc, cur) => acc + cur, 0);
+    return type === "thead" ? rightDistance + 8 : rightDistance;
+  }
+};
+
+const fixedLeftColumns = ref();
+const fixedRightColumns = ref();
+const queryFixedColumnIndex = (direction, key, sequence) => {
+  if (direction === "left" && sequence === "last") {
+    const index = fixedLeftColumns.value.findIndex((item) => item.key === key);
+    return index === fixedLeftColumns.value.length - 1;
+  } else if (direction === "right" && sequence === "first") {
+    const index = fixedRightColumns.value.findIndex((item) => item.key === key);
+    return index === 0;
+  } else {
+    return false;
+  }
+};
+
+const actualRenderColumns = ref([]); // 渲染的列
 watch(
   () => props.columnData,
   () => {
+    fixedLeftColumns.value = props.columnData.filter(
+      (item) => item.fixed === "left"
+    );
+    fixedRightColumns.value = props.columnData.filter(
+      (item) => item.fixed === "right"
+    );
+    const notFixedColumns = props.columnData.filter((item) => !item.fixed);
+    actualRenderColumns.value = [
+      ...fixedLeftColumns.value,
+      ...notFixedColumns,
+      ...fixedRightColumns.value,
+    ];
     nextTick(() => {
       calcColumnWidth();
     });
