@@ -1,0 +1,39 @@
+.s-collapse-item {
+  border-bottom: 1px solid var(--s-border-color);
+  .s-collapse-item__header {
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    color: var(--s-text-color);
+    cursor: pointer;
+    .icon-arrow-right {
+      color: var(--icon);
+    }
+  }
+
+  .s-collapse-item__content {
+    padding-bottom: 20px;
+    font-size: 13px;
+    display: grid;
+    color: var(--s-text-color);
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.3s ease;
+    .s-collapse-item__reference {
+      overflow: hidden;
+    }
+    .s-collapse-item__body {
+      padding-bottom: 20px;
+    }
+  }
+  &.s-collapse-item--active {
+    .s-collapse-item__content {
+      grid-template-rows: 1fr;
+    }
+    .icon-arrow-right {
+      transform: rotate(90deg);
+      transition: all 0.3s;
+    }
+  }
+}

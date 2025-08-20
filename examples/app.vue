@@ -252,6 +252,94 @@
       :height="360"
     >
     </s-table>
+    <h2>折叠面板</h2>
+    <s-collapse v-model="activeNames1">
+      <s-collapse-item title="Consistency" name="1">
+        <div>
+          Consistent with real life: in line with the process and logic of real
+          life, and comply with languages and habits that the users are used to;
+        </div>
+      </s-collapse-item>
+      <s-collapse-item title="Controllability" name="2">
+        <div>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eligendi
+          blanditiis voluptates est quod, asperiores inventore nesciunt nihil
+          similique hic maxime minima ea officia perspiciatis facilis deserunt
+          eius? Itaque, obcaecati minima.
+        </div>
+      </s-collapse-item>
+      <s-collapse-item title="标题3" name="3">
+        <div>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis
+          numquam exercitationem quidem eius, rem, cum tempora sapiente
+          obcaecati, perspiciatis repellat vel rerum iure placeat alias nihil
+          sunt a nemo veniam.
+        </div>
+      </s-collapse-item>
+    </s-collapse>
+    <h3>手风琴效果</h3>
+    <s-collapse v-model="activeNames2" accordion>
+      <s-collapse-item title="Consistency" name="1">
+        <div>
+          Consistent with real life: in line with the process and logic of real
+          life, and comply with languages and habits that the users are used to;
+        </div>
+      </s-collapse-item>
+      <s-collapse-item title="Feedback" name="2">
+        <div>
+          Operation feedback: enable the users to clearly perceive their
+          operations by style updates and interactive effects;
+        </div>
+      </s-collapse-item>
+      <s-collapse-item title="Efficiency" name="3">
+        <div>
+          Simplify the process: keep operating process simple and intuitive;
+        </div>
+      </s-collapse-item>
+      <s-collapse-item title="Controllability" name="4">
+        <div>
+          Decision making: giving advices about operations is acceptable, but do
+          not make decisions for the users;
+        </div>
+      </s-collapse-item>
+    </s-collapse>
+    <h3>自定义面板标题和图标</h3>
+    <s-collapse v-model="activeNames2">
+      <s-collapse-item name="1">
+        <template #title>
+          Consistency
+          <i class="s-icon icon-email" />
+        </template>
+        <div>
+          Consistent with real life: in line with the process and logic of real
+          life, and comply with languages and habits that the users are used to;
+        </div>
+      </s-collapse-item>
+      <s-collapse-item title="Feedback" name="2">
+        <template #icon="{ isActive }">
+          <i
+            :class="`s-icon ${
+              isActive ? 'icon-arrow-down-filling' : 'icon-arrow-right-filling'
+            }`"
+          />
+        </template>
+        <div>
+          Operation feedback: enable the users to clearly perceive their
+          operations by style updates and interactive effects;
+        </div>
+      </s-collapse-item>
+      <s-collapse-item title="Efficiency" name="3">
+        <div>
+          Simplify the process: keep operating process simple and intuitive;
+        </div>
+      </s-collapse-item>
+      <s-collapse-item title="Controllability" name="4">
+        <div>
+          Decision making: giving advices about operations is acceptable, but do
+          not make decisions for the users;
+        </div>
+      </s-collapse-item>
+    </s-collapse>
   </div>
 </template>
 
@@ -363,12 +451,6 @@ const handleNextStep = () => {
   }
 };
 // 待办列表
-const today =
-  new Date().getFullYear() +
-  "-" +
-  (new Date().getMonth() + 1).toString().padStart(2, "0") +
-  "-" +
-  new Date().getDate().toString().padStart(2, "0");
 const todoList = {
   "2025-08-10": [
     { title: "待办1", time: "09:00" },
@@ -502,6 +584,10 @@ const tableData = [
     address: "上海市普陀区金沙江路 1517 弄",
   },
 ];
+
+// 折叠面板
+const activeNames1 = ref([]);
+const activeNames2 = ref([]);
 </script>
 
 <style scoped>
